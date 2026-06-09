@@ -41,6 +41,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Set up Rate Limiting
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from fastapi import Request
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 # 1. Page Endpoint: Serve Web Dashboard
 @app.get("/", response_class=HTMLResponse)
 async def get_dashboard():
@@ -76,7 +86,8 @@ async def get_projects():
 
 # 4. API Endpoint: Query the Brain
 @app.get("/api/query")
-async def query_brain(q: str = Query(..., description="Query prompt to process")):
+@limiter.limit("20/minute")
+async def query_brain(request: Request, q: str = Query(..., description="Query prompt to process")):
     try:
         result = process_query(q)
         return JSONResponse(content=result)
@@ -85,7 +96,8 @@ async def query_brain(q: str = Query(..., description="Query prompt to process")
 
 # 5. API Endpoint: Run Synaptic Simulator
 @app.get("/api/simulate")
-async def run_simulation(start: int = Query(1, description="Starting Neuron ID (1-86000)")):
+@limiter.limit("10/minute")
+async def run_simulation(request: Request, start: int = Query(1, description="Starting Neuron ID (1-86000)")):
     signal_script = os.path.join(base_dir, "transmit_signal.py")
     if not os.path.exists(signal_script):
         raise HTTPException(status_code=404, detail="transmit_signal.py script not found.")
