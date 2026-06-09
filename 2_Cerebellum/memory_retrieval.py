@@ -5,7 +5,8 @@ import os
 import json
 import re
 
-base_dir = r"E:\rgai brain"
+import os
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 index_file = os.path.join(base_dir, "4_Limbic_System", "Hippocampus", "knowledge_index.json")
 
 def search_memory(query, limit=3):

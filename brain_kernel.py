@@ -12,7 +12,7 @@ from datetime import datetime
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-base_dir = r"E:\rgai brain"
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Insert paths to allow importing from sub-modules
 sys.path.append(os.path.join(base_dir, "4_Limbic_System"))

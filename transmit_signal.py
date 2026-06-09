@@ -5,7 +5,8 @@ import random
 import time
 from datetime import datetime
 
-base_dir = r"E:\rgai brain"
+import os
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 def find_neuron_path(neuron_id):
     if 1 <= neuron_id <= 16340:

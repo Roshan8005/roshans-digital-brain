@@ -14,7 +14,8 @@ import webbrowser
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-base_dir = r"E:\rgai brain"
+import os
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Insert paths to allow importing from root and sub-modules
 sys.path.append(base_dir)

@@ -2,7 +2,8 @@ import os
 import json
 from datetime import datetime
 
-base_dir = r"E:\rgai brain"
+import os
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 memory_file = os.path.join(base_dir, "4_Limbic_System", "Hippocampus", "knowledge_index.json")
 
 # Directories to ignore during scanning

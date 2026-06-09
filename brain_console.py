@@ -11,7 +11,8 @@ if hasattr(sys.stdout, 'reconfigure'):
 
 from brain_kernel import process_query, load_neuroplasticity_weights
 
-base_dir = r"E:\rgai brain"
+import os
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 def print_help():
     print("\nAvailable Commands:")
