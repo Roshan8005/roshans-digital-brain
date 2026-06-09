@@ -13,6 +13,12 @@ from fastapi.middleware.cors import CORSMiddleware
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
+except ImportError:
+    pass
+
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Insert paths to allow importing sub-modules
