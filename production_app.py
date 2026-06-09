@@ -51,8 +51,20 @@ limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# 1. Page Endpoint: Serve Web Dashboard
+# 1. Page Endpoint: Serve Main Chat UI
 @app.get("/", response_class=HTMLResponse)
+async def get_chat_ui():
+    html_path = os.path.join(base_dir, "1_Cerebrum", "chat_ui.html")
+    if os.path.exists(html_path):
+        try:
+            with open(html_path, "r", encoding="utf-8") as f:
+                return f.read()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to read Chat UI: {e}")
+    raise HTTPException(status_code=404, detail="chat_ui.html not found.")
+
+# 1.5 Page Endpoint: Serve Web Dashboard
+@app.get("/dashboard", response_class=HTMLResponse)
 async def get_dashboard():
     html_path = os.path.join(base_dir, "2_Cerebellum", "dashboard.html")
     if os.path.exists(html_path):
@@ -61,7 +73,7 @@ async def get_dashboard():
                 return f.read()
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Failed to read dashboard: {e}")
-    raise HTTPException(status_code=404, detail="dashboard.html not found under Cerebellum.")
+    raise HTTPException(status_code=404, detail="dashboard.html not found.")
 
 # 2. API Endpoint: Get Neuroplasticity Stats
 @app.get("/api/stats")

@@ -242,22 +242,30 @@ def process_query(query_str):
             memory_text = ""
             if memories:
                 for idx, mem in enumerate(memories, 1):
-                    # Preview of memory snippet
                     snippet = mem['snippet']
                     preview = snippet[:400] + "..." if len(snippet) > 400 else snippet
-                    memory_text += f"\n[Memory #{idx} from Lobe: {mem['region']}] Source: {mem['file_path']}\n{preview}\n"
-            else:
-                memory_text = "\n[No direct memories found in Hippocampus for this query.]\n"
-                
+                    memory_text += f"Source: {mem['file_path']}\n{preview}\n\n"
+            
+            # Generate conversational response using Gemini or Ollama
+            ai_reply = call_gemini_api(query_str, memory_text)
+            if not ai_reply:
+                ai_reply = call_ollama(query_str, memory_text)
+            
+            if not ai_reply:
+                ai_reply = "VedaKernel is currently running in pure memory mode (No LLM active). I found these memories but cannot formulate a conversational reply."
+
             response_text = (
-                f"[Akasha-Vedic Core Stack Active Channel]\n"
-                f"Query Resonance Frequency: {freq_report['vak_frequency_hz']} Hz ({freq_report['harmony_status']})\n"
-                f"Metaphysical Potential: {freq_report['potential_voltage']}V | Gate Capacity: {freq_report['gate_capacity']}\n"
-                f"--------------------------------------------------\n"
-                f"RETRIEVED MEMORY PATHWAYS:\n{memory_text}"
-                f"--------------------------------------------------\n"
-                f"SYSTEM COGNITIVE STATE:\n{system_status}"
+                f"{ai_reply}\n\n"
+                f"***\n"
+                f"**[Akasha-Vedic Core Metrics]**\n"
+                f"• Resonance: {freq_report['vak_frequency_hz']} Hz ({freq_report['harmony_status']})\n"
+                f"• Potential: {freq_report['potential_voltage']}V | Gate: {freq_report['gate_capacity']}\n"
             )
+            
+            if memories:
+                response_text += f"\n**[Memory Pathways Activated]**\n"
+                for mem in memories:
+                    response_text += f"- `{mem['file_path']}` (Lobe: {mem['region']})\n"
         except Exception as e:
             response_text = f"[Veda Kernel Error] Failed during core cognitive execution: {e}"
     else:
