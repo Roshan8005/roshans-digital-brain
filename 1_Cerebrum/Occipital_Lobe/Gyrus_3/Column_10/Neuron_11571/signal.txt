@@ -1,0 +1,8 @@
+--- Action Potential (Signal) ---
+Timestamp: 2026-06-09 17:11:31.574
+Neuron ID: Neuron_11571
+Brain Region: Cerebrum
+Hop Count: 4
+Signal Message: Activate Rosha's Thought Process
+Transmission Path: Start (Neuron_1) -> Neuron_85873 -> Neuron_3790 -> Neuron_85928 -> Neuron_11571
+Folder Path: E:\rgai brain\1_Cerebrum\Occipital_Lobe\Gyrus_3\Column_10\Neuron_11571

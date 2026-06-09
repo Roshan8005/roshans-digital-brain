@@ -1,0 +1,32 @@
+# 🏗️ Advanced Programming, Architecture & Systems
+Location: Cerebrum / Frontal Lobe (Engineering Design & System Architecture)
+
+## 1. Software Design Patterns
+Design patterns are reusable solutions to commonly occurring problems in software design.
+* **Creational Patterns**:
+  * **Singleton**: Ensures a class has only one instance and provides a global point of access (e.g., Database Connection Pools).
+  * **Factory Method**: Defines an interface for creating objects, but lets subclasses decide which class to instantiate.
+* **Structural Patterns**:
+  * **Adapter**: Allows classes with incompatible interfaces to work together (e.g., integrating a legacy payment API).
+  * **Decorator**: Dynamically adds behavior to an object without modifying its structure (e.g., adding logging/caching wrappers).
+* **Behavioral Patterns**:
+  * **Observer**: A subscription mechanism to notify multiple objects about any events that happen to the object they are observing (e.g., Pub/Sub systems).
+
+---
+
+## 2. System Architecture & Microservices
+* **Monolith vs. Microservices**:
+  * **Monolithic**: A single, unified codebase where all components are tightly coupled. Easy to deploy initially, hard to scale.
+  * **Microservices**: An application broken into independent services that communicate via APIs (REST, gRPC) or event buses (RabbitMQ, Kafka). Each service can be scaled and deployed separately.
+* **REST (Representational State Transfer) vs. GraphQL**:
+  * **REST**: Uses standard HTTP methods (`GET`, `POST`, `PUT`, `DELETE`) with structured URL endpoints. Can lead to over-fetching or under-fetching of data.
+  * **GraphQL**: A query language for APIs where clients request exactly the fields they need in a single round-trip.
+
+---
+
+## 3. DevOps & Containerization
+* **Docker / Containers**: Packages code, runtime, system tools, and libraries into a single "container" that runs identically on any machine (eliminates "works on my machine" issues).
+* **Kubernetes (K8s)**: An open-source system for automating deployment, scaling, and management of containerized applications.
+* **CI/CD (Continuous Integration / Continuous Deployment)**:
+  * **CI**: Automatically building, testing, and linting code changes when pushed to a repository (e.g., GitHub Actions).
+  * **CD**: Automatically deploying the successfully built code to staging or production environments.

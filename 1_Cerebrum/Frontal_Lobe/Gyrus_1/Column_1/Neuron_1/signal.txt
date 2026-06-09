@@ -1,0 +1,8 @@
+--- Action Potential (Signal) ---
+Timestamp: 2026-06-09 18:11:12.972
+Neuron ID: Neuron_1
+Brain Region: Cerebrum
+Hop Count: 0
+Signal Message: System Diagnostics Test
+Transmission Path: Start (Neuron_1)
+Folder Path: E:\rgai brain\1_Cerebrum\Frontal_Lobe\Gyrus_1\Column_1\Neuron_1

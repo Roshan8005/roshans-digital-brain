@@ -1,0 +1,8 @@
+--- Action Potential (Signal) ---
+Timestamp: 2026-06-09 17:11:31.570
+Neuron ID: Neuron_525
+Brain Region: Cerebrum
+Hop Count: 4
+Signal Message: Activate Rosha's Thought Process
+Transmission Path: Start (Neuron_1) -> Neuron_85873 -> Neuron_85874 -> Neuron_523 -> Neuron_525
+Folder Path: E:\rgai brain\1_Cerebrum\Frontal_Lobe\Gyrus_2\Column_4\Neuron_525

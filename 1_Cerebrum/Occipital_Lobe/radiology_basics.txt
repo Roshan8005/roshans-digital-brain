@@ -1,0 +1,41 @@
+# 🩻 Radiology & Medical Imaging Basics
+Location: Occipital Lobe (Visual Processing Center)
+
+## 1. Fundamentals of Medical Imaging
+Medical imaging allows visualization of the internal structures of the body to diagnose, monitor, or treat medical conditions.
+
+### A. Radiodensity (How tissue appears on X-Rays/CTs)
+* **Radio-opaque (White)**: High-density tissues (e.g., bones, calcifications, metallic implants) block radiation.
+* **Radiolucent (Black)**: Low-density areas (e.g., lungs filled with air, gas in the bowel) allow radiation to pass through.
+* **Soft Tissues (Gray)**: Intermediate density (e.g., muscles, liver, kidneys, fluid collections).
+
+---
+
+## 2. Key Modalities
+### A. Projectional Radiography (X-Ray)
+* **Description**: Uses a single beam of electromagnetic radiation to produce a 2D projection.
+* **Best Used For**: Bone fractures, chest infections (pneumonia), dental exams, and mammography.
+* **Common Views**: Posterior-Anterior (PA), Anterior-Posterior (AP), Lateral.
+
+### B. Computed Tomography (CT Scan)
+* **Description**: Uses rotating X-ray beams and digital detectors to compile a series of 2D slices into a 3D volume.
+* **Best Used For**: Acute trauma, cerebral hemorrhage, pulmonary embolism, cancer staging, and abdominal pain.
+* **Contrast Agents**: Iodine-based contrast is often injected IV to highlight blood vessels and organs.
+
+### C. Magnetic Resonance Imaging (MRI)
+* **Description**: Uses strong magnetic fields and radiofrequency pulses to excite hydrogen protons in the body, measuring their relaxation times. Does not use ionizing radiation.
+* **T1-Weighted vs. T2-Weighted**:
+  * **T1**: Fat is bright (hyperintense), fluid/CSF is dark (hypointense). Excellent for anatomy.
+  * **T2**: Fluid/CSF is bright, pathology/edema is bright. Excellent for detecting inflammation or lesions.
+* **Best Used For**: Brain tumors, spinal cord injuries, ligaments/tendons (soft tissues), and joint imaging.
+
+### D. Ultrasonography (Ultrasound)
+* **Description**: Uses high-frequency sound waves to produce real-time dynamic images. Safe for pregnancy (no radiation).
+* **Best Used For**: Obstetrics, gallbladder evaluation, cardiac imaging (Echocardiogram), and deep vein thrombosis (DVT).
+
+---
+
+## 3. Anatomical Planes
+* **Axial (Transverse)**: Cuts the body into upper (superior) and lower (inferior) sections. Viewed from the patient's feet looking up.
+* **Sagittal**: Cuts the body into left and right sections.
+* **Coronal**: Cuts the body into front (anterior/ventral) and back (posterior/dorsal) sections.

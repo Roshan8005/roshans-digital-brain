@@ -1,0 +1,8 @@
+--- Action Potential (Signal) ---
+Timestamp: 2026-06-09 18:11:12.973
+Neuron ID: Neuron_85873
+Brain Region: Diencephalon
+Hop Count: 1
+Signal Message: System Diagnostics Test
+Transmission Path: Start (Neuron_1) -> Neuron_85873
+Folder Path: E:\rgai brain\5_Diencephalon\Hypothalamus\Nucleus_4\Neuron_85873

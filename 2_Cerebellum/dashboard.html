@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roshan's Digital Brain Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.3);
+            --secondary: #8b5cf6;
+            --secondary-glow: rgba(139, 92, 246, 0.3);
+            --success: #10b981;
+            --danger: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            scrollbar-width: thin;
+            scrollbar-color: var(--card-border) transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Brain Region Weight List */
+        .region-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .region-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 14px;
+        }
+
+        .region-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .region-name {
+            color: var(--text-main);
+        }
+
+        .region-weight {
+            color: var(--primary);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Project Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+        }
+
+        .project-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .project-badge:hover {
+            color: var(--text-main);
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--primary);
+        }
+
+        /* Chat Section */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .message.user {
+            background: var(--primary);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.brain {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            white-space: pre-wrap;
+            border: 1px solid var(--card-border);
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        input[type="text"], select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+        }
+
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Simulator Card */
+        .simulator-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trace-display {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.9rem;
+            color: var(--success);
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Roshan Kumar Sah's Digital Brain</h1>
+                <p style="color: var(--text-muted); margin-top: 0.3rem;">Biomimetic Local AI Storage & Logic Center</p>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                Brain Kernel Online
+            </div>
+        </header>
+
+        <div class="grid-layout">
+            <!-- Left Side: Stats and Info -->
+            <div>
+                <div class="glass-card">
+                    <h2>🧠 Neuroplasticity Weights</h2>
+                    <div class="region-list" id="region-list">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>🔗 Connected Project Lobes</h2>
+                    <div class="project-grid" id="project-grid">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>⚡ Synaptic Path Simulator</h2>
+                    <div class="simulator-controls">
+                        <select id="sim-start">
+                            <option value="1">Neuron 1 (Cerebrum)</option>
+                            <option value="20000">Neuron 20000 (Cerebellum)</option>
+                            <option value="85200">Neuron 85200 (Brainstem)</option>
+                            <option value="85500">Neuron 85500 (Limbic System)</option>
+                            <option value="85800">Neuron 85800 (Diencephalon)</option>
+                        </select>
+                        <button onclick="runSimulation()">Trigger Pulse</button>
+                    </div>
+                    <div class="trace-display" id="trace-display">Click 'Trigger Pulse' to run an action potential simulation...</div>
+                </div>
+            </div>
+
+            <!-- Right Side: Interaction Console -->
+            <div class="glass-card chat-container">
+                <h2>💬 Brain Cognitive Interface</h2>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message brain">System initialized, Roshan. Ask me anything about programming, radiology, cryptography, or query local indexed files.</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="query-input" placeholder="Ask your brain a question..." onkeydown="if(event.key==='Enter') sendQuery()">
+                    <button onclick="sendQuery()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load initial stats
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const weights = await res.json();
+                const container = document.getElementById('region-list');
+                container.innerHTML = '';
+                
+                // Find max weight to scale percentage representation
+                const maxWeight = Math.max(...Object.values(weights), 1);
+                
+                Object.entries(weights).forEach(([region, val]) => {
+                    const pct = (val / maxWeight) * 100;
+                    container.innerHTML += `
+                        <div class="region-item">
+                            <div class="region-header">
+                                <span class="region-name">${region.replace('_', ' ')}</span>
+                                <span class="region-weight">${val} AP</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                console.error("Error loading stats", e);
+            }
+        }
+
+        // Load connected projects
+        async function loadProjects() {
+            try {
+                const res = await fetch('/api/projects');
+                const projects = await res.json();
+                const container = document.getElementById('project-grid');
+                container.innerHTML = '';
+                projects.forEach(p => {
+                    container.innerHTML += `<div class="project-badge">${p}</div>`;
+                });
+            } catch (e) {
+                console.error("Error loading projects", e);
+            }
+        }
+
+        // Send query
+        async function sendQuery() {
+            const input = document.getElementById('query-input');
+            const query = input.value.strip ? input.value.strip() : input.value.trim();
+            if (!query) return;
+
+            // Add user message
+            addMessage(query, 'user');
+            input.value = '';
+
+            // Loading message
+            const loadingMsg = addMessage("Thinking...", 'brain');
+
+            try {
+                const res = await fetch(`/api/query?q=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                loadingMsg.remove();
+                addMessage(data.response, 'brain');
+                // Reload stats as weights might have updated
+                loadStats();
+            } catch (e) {
+                loadingMsg.remove();
+                addMessage("Error communicating with the brain kernel.", 'brain');
+            }
+        }
+
+        // Run simulation
+        async function runSimulation() {
+            const startId = document.getElementById('sim-start').value;
+            const display = document.getElementById('trace-display');
+            display.innerText = "Simulating Action Potential propagation...";
+
+            try {
+                const res = await fetch(`/api/simulate?start=${startId}`);
+                const data = await res.json();
+                display.innerText = data.output;
+                loadStats();
+            } catch (e) {
+                display.innerText = "Simulation failed.";
+            }
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            msg.innerText = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+            return msg;
+        }
+
+        // Initial loading
+        loadStats();
+        loadProjects();
+    </script>
+</body>
+</html>

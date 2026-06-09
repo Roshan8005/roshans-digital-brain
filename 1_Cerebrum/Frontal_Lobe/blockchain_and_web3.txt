@@ -1,0 +1,33 @@
+# 🪙 Blockchain, Cryptocurrency & Web3 Fundamentals
+Location: Cerebrum / Frontal Lobe (Logic & Financial Modeling)
+
+## 1. Core Cryptographic Primitives
+Blockchain networks rely heavily on mathematics and cryptography to ensure security, immutability, and trustlessness.
+* **Hash Functions (e.g., SHA-256)**: Take any input and produce a fixed-size 256-bit string. It is one-way (cannot reverse-engineer input) and collision-resistant. Used for block validation (mining) and address generation.
+* **Asymmetric Cryptography (Public-Key Cryptography)**:
+  * **Private Key**: A secret 256-bit number used to sign transactions (proves ownership). Keep safe!
+  * **Public Key**: Derived mathematically from the private key (using Elliptic Curve Cryptography, e.g., secp256k1). Used to verify signatures.
+  * **Address**: A hashed representation of the public key (e.g., `0x...` in Ethereum).
+
+---
+
+## 2. Distributed Ledger & Consensus Algorithms
+A blockchain is a decentralized database shared across a network of nodes. To agree on the state of the ledger, nodes use consensus mechanisms:
+* **Proof of Work (PoW)**: Nodes (miners) compete to solve a complex mathematical puzzle. The first to solve it proposes the next block and earns a reward. Highly secure but energy-intensive. Used by Bitcoin.
+* **Proof of Stake (PoS)**: Validators are chosen to propose blocks based on the number of coins they lock up (stake) as collateral. Faster, scalable, and energy-efficient. Used by Ethereum.
+
+---
+
+## 3. Smart Contracts & Decentralized Applications (dApps)
+* **Smart Contracts**: Self-executing code stored on the blockchain that automatically executes agreements when predefined conditions are met. (Written in languages like **Solidity** for Ethereum, or Rust for Solana).
+* **EVM (Ethereum Virtual Machine)**: The runtime environment that executes smart contracts across all nodes in the Ethereum network.
+* **ERC Standards**:
+  * **ERC-20**: Standard for fungible tokens (tokens where each unit is identical, e.g., USDT, LINK).
+  * **ERC-721 / ERC-1155**: Standards for Non-Fungible Tokens (NFTs) representing unique digital assets.
+
+---
+
+## 4. Decentralized Finance (DeFi) & Web3 Concepts
+* **Liquidity Pools**: Crowdsourced pools of tokens locked in smart contracts used to facilitate trading on decentralized exchanges (DEXs like Uniswap) without traditional market makers.
+* **Gas Fees**: The transaction fee paid to validators/miners to compute transactions. Paid in the network's native currency (e.g., ETH on Ethereum).
+* **Decentralized Identifiers (DIDs)**: Cryptographically secured identities owned entirely by the user instead of centralized servers.

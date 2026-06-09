@@ -1,0 +1,8 @@
+--- Action Potential (Signal) ---
+Timestamp: 2026-06-09 17:11:31.575
+Neuron ID: Neuron_85926
+Brain Region: Diencephalon
+Hop Count: 4
+Signal Message: Activate Rosha's Thought Process
+Transmission Path: Start (Neuron_1) -> Neuron_85873 -> Neuron_3790 -> Neuron_85928 -> Neuron_85926
+Folder Path: E:\rgai brain\5_Diencephalon\Thalamus\Nucleus_2\Neuron_85926

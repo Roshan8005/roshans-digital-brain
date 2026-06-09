@@ -1,0 +1,28 @@
+# 🩻 Advanced Radiology & Clinical Diagnostics
+Location: Occipital Lobe (Advanced Visual Pathology Analysis)
+
+## 1. Stroke Evaluation (CT Brain Interpretation)
+When evaluating acute stroke, a non-contrast CT (NCCT) of the brain is the primary emergency diagnostic tool to differentiate between:
+* **Ischemic Stroke (Blood clot)**: Shows **Hypodensity** (darker brain tissue) in the affected vascular territory (e.g., MCA territory). However, in the hyperacute phase (<6 hours), the CT may appear normal.
+  * *Early signs*: Insular ribbon sign, loss of gray-white matter differentiation, hyperdense MCA sign (clot in the middle cerebral artery).
+* **Hemorrhagic Stroke (Bleeding)**: Shows **Hyperdensity** (bright white blood) immediately in the parenchyma (Intracerebral Hemorrhage - ICH) or cisterns (Subarachnoid Hemorrhage - SAH).
+* **Decision Rule**: Intravenous tissue plasminogen activator (tPA) is given for Ischemic stroke but is strictly *contraindicated* in Hemorrhagic stroke due to fatal bleeding risk.
+
+---
+
+## 2. Systematic Chest X-Ray (CXR) Interpretation
+Use the **"ABCDE"** systematic approach to avoid diagnostic errors:
+* **A - Airway**: Is the trachea midline? Check for deviation (can indicate tension pneumothorax or atelectasis). Check the carina.
+* **B - Breathing (Lungs & Pleura)**: Scan lung fields for symmetry. Look for infiltrates (consolidation/pneumonia), masses, or nodules. Trace the pleura; check for loss of lung markings indicating pneumothorax.
+* **C - Circulation (Cardiothoracic Ratio)**: Is the heart size normal? Heart width should be less than 50% of the internal thoracic diameter on a PA view. Check mediastinal contours.
+* **D - Diaphragm**: Look for sharp costophrenic angles (blunting indicates pleural effusion). Check for free air under the right hemidiaphragm (indicates pneumoperitoneum - surgical emergency).
+* **E - Everything else (Bones & Soft Tissues)**: Check for rib fractures, clavicle fractures, surgical emphysema, and external lines/tubes (e.g., endotracheal tubes, central lines).
+
+---
+
+## 3. Contrast Safety Protocols
+When injecting intravenous iodinated contrast (used for CT scans) or gadolinium-based contrast (used for MRIs):
+* **Contrast-Induced Nephropathy (CIN)**: Check renal function (estimated Glomerular Filtration Rate - eGFR) before injection. If eGFR < 30 mL/min/1.73m², IV contrast should be avoided or patient hydrated beforehand to prevent acute kidney injury.
+* **Allergic Reactions**:
+  * *Mild*: Hives, itching, mild nausea. Treat with antihistamines.
+  * *Severe (Anaphylactoid)*: Bronchospasm, laryngeal edema, hypotension. Treat immediately with intramuscular Epinephrine (Adrenaline).

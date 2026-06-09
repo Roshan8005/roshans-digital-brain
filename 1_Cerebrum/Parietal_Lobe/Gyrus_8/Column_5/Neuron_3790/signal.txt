@@ -1,0 +1,8 @@
+--- Action Potential (Signal) ---
+Timestamp: 2026-06-09 18:11:12.974
+Neuron ID: Neuron_3790
+Brain Region: Cerebrum
+Hop Count: 2
+Signal Message: System Diagnostics Test
+Transmission Path: Start (Neuron_1) -> Neuron_85873 -> Neuron_3790
+Folder Path: E:\rgai brain\1_Cerebrum\Parietal_Lobe\Gyrus_8\Column_5\Neuron_3790

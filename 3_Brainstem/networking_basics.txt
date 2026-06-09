@@ -1,0 +1,39 @@
+# 🌐 Internet, Networking & Protocols Basics
+Location: Brainstem (Autonomic & Communication Relay)
+
+## 1. The Client-Server Architecture
+The Internet operates primarily on a request-response model where a **Client** (e.g., web browser, mobile app) requests resources, and a **Server** (e.g., cloud host, local API) processes the request and responds with data.
+
+---
+
+## 2. Networking Models
+### The OSI 7-Layer Model
+1. **Physical Layer**: Transmits raw bits over cables or radio waves (Fiber, Wi-Fi, Ethernet).
+2. **Data Link Layer**: Node-to-node data transfer (MAC Addresses, ARP).
+3. **Network Layer**: Routes packets across networks (IP Addresses, Routers).
+4. **Transport Layer**: End-to-end connections and reliability (TCP, UDP).
+5. **Session Layer**: Manages sessions between applications.
+6. **Presentation Layer**: Data translation and encryption (SSL/TLS, JSON formatting).
+7. **Application Layer**: Direct user interaction (HTTP, FTP, DNS, SMTP).
+
+---
+
+## 3. Core Protocols
+### A. IP (Internet Protocol)
+* **IPv4**: 32-bit address (e.g., `192.168.1.1`).
+* **IPv6**: 128-bit address (e.g., `2001:0db8:85a3:0000:0000:8a2e:0370:7334`).
+
+### B. TCP vs UDP
+* **TCP (Transmission Control Protocol)**: Connection-oriented, guarantees delivery, packets are ordered. Used for web browsing (HTTP), emails, database calls.
+* **UDP (User Datagram Protocol)**: Connectionless, speed-focused, no delivery guarantee, packets can arrive out of order. Used for video streaming, online gaming, VoIP.
+
+### C. DNS (Domain Name System)
+* The phonebook of the Internet. Resolves human-readable domain names (e.g., `google.com`) into computer-readable IP addresses (e.g., `142.250.190.46`).
+
+### D. HTTP / HTTPS (Hypertext Transfer Protocol Secure)
+* Protocol used to transfer web pages and REST API payloads.
+* **Methods**: `GET` (retrieve), `POST` (create), `PUT` (update), `DELETE` (remove).
+* **HTTPS**: Encrypts traffic using TLS/SSL to prevent eavesdropping.
+
+### E. WebSockets
+* Protocol providing full-duplex communication channels over a single TCP connection, allowing real-time, bi-directional data flow (e.g., chat applications, live dashboards).

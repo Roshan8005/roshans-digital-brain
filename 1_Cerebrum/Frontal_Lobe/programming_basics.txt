@@ -1,0 +1,40 @@
+# 💻 Computer Science & Programming Basics
+Location: Cerebrum / Frontal Lobe (Decision Making & Logic Center)
+
+## 1. Core Hardware Concepts
+* **CPU (Central Processing Unit)**: The brain of the computer that executes machine instructions.
+* **RAM (Random Access Memory)**: Fast, volatile memory used to store active program data. Cleared when powered off.
+* **Storage (SSD/HDD)**: Non-volatile, slower storage used to persist files and applications long-term.
+
+---
+
+## 2. Programming Concepts & Paradigms
+### A. Key Control Structures
+1. **Sequence**: Running code line-by-line.
+2. **Selection (Conditional)**: `if-else` blocks branching execution based on boolean logic.
+3. **Iteration (Loops)**: `for` and `while` loops repeating code blocks.
+
+### B. OOP (Object-Oriented Programming) Principles
+* **Encapsulation**: Bundling data (attributes) and methods (actions) inside a class, hiding internal states.
+* **Inheritance**: Allowing a child class to inherit fields and methods from a parent class.
+* **Polymorphism**: Allowing different classes to be treated as instances of a parent class with custom behavior.
+* **Abstraction**: Hiding complex implementation details and exposing only essential interfaces.
+
+---
+
+## 3. Data Structures & Algorithms
+### Common Data Structures
+* **Array / List**: Ordered collection of items stored in contiguous memory.
+* **Dictionary / Map (Key-Value)**: Unordered collection mapping unique keys to values. (e.g., HashMaps).
+* **Stack**: Last-In-First-Out (LIFO) structure (e.g., recursion call stack).
+* **Queue**: First-In-First-Out (FIFO) structure (e.g., message queues).
+* **Binary Tree**: Hierarchical structure where each node has at most two children.
+
+---
+
+## 4. Git Version Control
+* **Repository (Repo)**: A directory tracked by Git.
+* **Commit**: A snapshot of code changes with a unique ID (hash).
+* **Branch**: A parallel version of the repository to work on features independently.
+* **Merge**: Combining branches together.
+* **Clone**: Downloading a copy of a remote repository.

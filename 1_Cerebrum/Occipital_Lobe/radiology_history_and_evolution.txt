@@ -1,0 +1,26 @@
+# 🩻 Radiology: History, Discovery & Evolution
+Location: Occipital Lobe (Visual Processing Center)
+
+## 1. The Discovery (1895)
+* **Discoverer**: Wilhelm Conrad Roentgen, a German physicist.
+* **The Event**: On November 8, 1895, while working with a cathode-ray generator, Roentgen noticed a nearby barium platinocyanide screen glowing. He realized a new type of invisible ray (which he named "X-ray" due to its unknown nature) was being emitted, which could penetrate black cardboard and soft human tissue, casting shadows of bones.
+* **The Famous Image**: The first medical X-ray was of his wife Anna Bertha's hand, showing her finger bones and wedding ring.
+* **Importance**: For the first time in human history, doctors could view the internal structures of a living patient without surgery. Roentgen received the first-ever Nobel Prize in Physics in 1901.
+
+---
+
+## 2. Evolution of Modalities
+* **1950s - Ultrasound**: Derived from military SONAR technology used in WWII. Dr. Ian Donald in Scotland pioneered its use in obstetrics, showing it was safe for fetal visualization.
+* **1972 - Computed Tomography (CT)**:
+  * **Inventors**: Sir Godfrey Hounsfield (EMI Laboratories) and Allan Cormack.
+  * **Evolution**: The first scanner was only capable of head scans and took hours to capture a single slice. Today's helical multi-detector CTs can scan the entire body in seconds. They shared the Nobel Prize in Medicine in 1979.
+* **1977 - Magnetic Resonance Imaging (MRI)**:
+  * **Inventors**: Paul Lauterbur (who discovered using magnetic gradients for spatial imaging) and Sir Peter Mansfield (who developed mathematical models for fast scanning).
+  * **Evolution**: First human body scan occurred in 1977. MRI revolutionized soft tissue, brain, and spinal diagnostics without using harmful ionizing radiation. They received the Nobel Prize in Medicine in 2003.
+
+---
+
+## 3. Technology & Modern Evolution
+* **Analog to Digital**: The 1990s marked the transition from physical radiographic film developed in darkrooms to Computed Radiography (CR) and Direct Digital Radiography (DR).
+* **PACS (Picture Archiving and Communication System)**: Introduced standard DICOM (Digital Imaging and Communications in Medicine) file formats, allowing digital storage, transmission, and retrieval of scans across global networks.
+* **AI & Deep Learning (Current Era)**: Computer Vision models are trained on millions of scans to automatically detect micro-fractures, brain hemorrhages, lung nodules (pneumonia/cancer), and speed up reconstruction times for MRI scans.
