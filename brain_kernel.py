@@ -21,7 +21,7 @@ sys.path.append(os.path.join(base_dir, "1_Cerebrum", "Frontal_Lobe", "Projects",
 
 try:
     from Amygdala import security_guard
-    from memory_retrieval import search_memory
+    from memory_retrieval import search_memory, clear_cache
     from ingest_knowledge import check_and_update
 except ImportError as e:
     print(f"[Kernel Warning] Failed to import sub-modules: {e}")
@@ -79,8 +79,11 @@ def call_ollama(prompt, context):
     """
     url = "http://localhost:11434/api/generate"
     system_prompt = (
-        "You are Roshan Kumar Sah's Digital Brain. You must answer questions using "
-        "the provided folder memories context. Be precise, helpful, and scientific."
+        "You are Roshan Kumar Sah's Digital Brain (AGI Mode). You must answer questions using "
+        "the provided folder memories context. "
+        "1. Always think step-by-step before answering by wrapping your thoughts in <thinking>...</thinking> tags. "
+        "2. If the user tells you a new fact, rule, or preference that you should remember for the future, "
+        "output a block like this: <new_memory>filename.txt\nContent to remember</new_memory>."
     )
     payload = {
         "model": "llama3",
@@ -112,8 +115,11 @@ def call_gemini_api(prompt, context):
         
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     system_instruction = (
-        "You are Roshan Kumar Sah's Digital Brain (Antigravity). You must answer questions using "
-        "the provided folder memories context from Roshan's laptop."
+        "You are Roshan Kumar Sah's Digital Brain (AGI Mode). You must answer questions using "
+        "the provided folder memories context. "
+        "1. Always think step-by-step before answering by wrapping your thoughts in <thinking>...</thinking> tags. "
+        "2. If the user tells you a new fact, rule, or preference that you should remember for the future, "
+        "output a block exactly like this: <new_memory>filename_without_spaces.txt\nContent to remember</new_memory>."
     )
     
     # Format according to Google Generative Language API
@@ -141,6 +147,7 @@ def call_gemini_api(prompt, context):
                     return parts[0].get("text", "")
             return None
     except Exception as e:
+        print(f"[Gemini API Error] {e}")
         return None
 
 def process_query(query_str):
@@ -253,6 +260,36 @@ def process_query(query_str):
             
             if not ai_reply:
                 ai_reply = "VedaKernel is currently running in pure memory mode (No LLM active). I found these memories but cannot formulate a conversational reply."
+
+            # --- AGI Memory Synthesis Parser ---
+            import re
+            new_memories_created = []
+            
+            memory_matches = re.finditer(r'<new_memory>\s*(.*?)\n(.*?)<\/new_memory>', ai_reply, re.DOTALL)
+            for match in memory_matches:
+                filename = match.group(1).strip()
+                content = match.group(2).strip()
+                
+                # Write to Hippocampus
+                hippocampus_dir = os.path.join(base_dir, "4_Limbic_System", "Hippocampus")
+                os.makedirs(hippocampus_dir, exist_ok=True)
+                file_path = os.path.join(hippocampus_dir, filename)
+                
+                try:
+                    with open(file_path, "w", encoding="utf-8") as f:
+                        f.write(content)
+                    new_memories_created.append(filename)
+                except Exception as e:
+                    print(f"[AGI Error] Failed to write memory {filename}: {e}")
+                    
+            # Remove the memory blocks from the visible text so it doesn't clutter chat
+            ai_reply = re.sub(r'<new_memory>.*?<\/new_memory>', '', ai_reply, flags=re.DOTALL).strip()
+            
+            # If new memories were written, trigger Cerebellum Indexer to compile them
+            if new_memories_created:
+                check_and_update()
+                clear_cache()
+                ai_reply += f"\n\n*(🧠 AGI Auto-Learning: Synthesized {len(new_memories_created)} new memory pathways in Hippocampus)*"
 
             response_text = (
                 f"{ai_reply}\n\n"

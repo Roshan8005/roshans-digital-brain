@@ -26,6 +26,10 @@ def _load_index():
         print(f"[Cerebellum Error] Failed to read memory index: {e}")
         return {}
 
+def clear_cache():
+    global _KNOWLEDGE_CACHE
+    _KNOWLEDGE_CACHE = None
+
 def search_memory(query, limit=3):
     """
     Searches the compiled knowledge index for matching terms.
