@@ -18,9 +18,11 @@ def scan_and_index():
         # Filter directories in-place to prevent entering ignored ones
         dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
         
-        # Skip index file itself
+        # Skip index and weights files
         if "knowledge_index.json" in files:
             files.remove("knowledge_index.json")
+        if "neuroplasticity_weights.json" in files:
+            files.remove("neuroplasticity_weights.json")
             
         for file in files:
             if file.endswith(VALID_EXTENSIONS):
@@ -76,7 +78,7 @@ def check_and_update():
         dirs[:] = [d for d in dirs if d not in IGNORE_DIRS]
         
         for file in files:
-            if file.endswith(VALID_EXTENSIONS) and file != "knowledge_index.json":
+            if file.endswith(VALID_EXTENSIONS) and file not in ("knowledge_index.json", "neuroplasticity_weights.json"):
                 file_path = os.path.join(root, file)
                 # Check modification time
                 if os.path.getmtime(file_path) > index_time:

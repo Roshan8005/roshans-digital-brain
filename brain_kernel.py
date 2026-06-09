@@ -39,23 +39,33 @@ except Exception as e:
 
 WEIGHTS_FILE = os.path.join(base_dir, "4_Limbic_System", "neuroplasticity_weights.json")
 
+_WEIGHTS_CACHE = None
+
 def load_neuroplasticity_weights():
+    global _WEIGHTS_CACHE
+    if _WEIGHTS_CACHE is not None:
+        return _WEIGHTS_CACHE
+        
     if os.path.exists(WEIGHTS_FILE):
         try:
             with open(WEIGHTS_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                _WEIGHTS_CACHE = json.load(f)
+                return _WEIGHTS_CACHE
         except Exception:
             pass
             
-    return {
+    _WEIGHTS_CACHE = {
         "1_Cerebrum": 0,
         "2_Cerebellum": 0,
         "3_Brainstem": 0,
         "4_Limbic_System": 0,
         "5_Diencephalon": 0
     }
+    return _WEIGHTS_CACHE
 
 def save_neuroplasticity_weights(weights):
+    global _WEIGHTS_CACHE
+    _WEIGHTS_CACHE = weights
     try:
         with open(WEIGHTS_FILE, "w", encoding="utf-8") as f:
             json.dump(weights, f, indent=4)
@@ -142,8 +152,8 @@ def process_query(query_str):
     4. Updates neuroplasticity weights
     5. Dispatches to LLM (Ollama -> Gemini -> Fallback)
     """
-    # Step 1: Auto-Updater checks for modified files
-    check_and_update()
+    # Removed synchronous check_and_update() for extreme performance.
+    # The cache automatically loads the pre-compiled index.
     
     # Route to Veda Kernel if requested
     if query_str.startswith("/veda "):
@@ -264,7 +274,7 @@ def process_query(query_str):
                 f"--------------------------------------------------"
             )
         else:
-            response_text = "[No direct memory match found] Please feed relevant documents into E:\\rgai brain."
+            response_text = "[No direct memory match found] Please feed relevant documents into the system."
             
     return {
         "status": "SUCCESS",

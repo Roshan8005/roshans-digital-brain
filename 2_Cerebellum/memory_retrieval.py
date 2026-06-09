@@ -9,23 +9,34 @@ import os
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 index_file = os.path.join(base_dir, "4_Limbic_System", "Hippocampus", "knowledge_index.json")
 
+_KNOWLEDGE_CACHE = None
+WORD_PATTERN = re.compile(r"\w+")
+
+def _load_index():
+    global _KNOWLEDGE_CACHE
+    if _KNOWLEDGE_CACHE is not None:
+        return _KNOWLEDGE_CACHE
+    if not os.path.exists(index_file):
+        return {}
+    try:
+        with open(index_file, "r", encoding="utf-8") as f:
+            _KNOWLEDGE_CACHE = json.load(f)
+            return _KNOWLEDGE_CACHE
+    except Exception as e:
+        print(f"[Cerebellum Error] Failed to read memory index: {e}")
+        return {}
+
 def search_memory(query, limit=3):
     """
     Searches the compiled knowledge index for matching terms.
     Returns: List of dicts [{"file_path": str, "score": int, "region": str, "snippet": str}]
     """
-    if not os.path.exists(index_file):
-        return []
-        
-    try:
-        with open(index_file, "r", encoding="utf-8") as f:
-            index = json.load(f)
-    except Exception as e:
-        print(f"[Cerebellum Error] Failed to read memory index: {e}")
+    index = _load_index()
+    if not index:
         return []
         
     # Standardize query terms
-    query_terms = [term.lower() for term in re.findall(r"\w+", query) if len(term) > 2]
+    query_terms = [term.lower() for term in WORD_PATTERN.findall(query) if len(term) > 2]
     if not query_terms:
         return []
         
