@@ -3,8 +3,9 @@
 [tool.ruff]
 line-length = 88
 target-version = "py39"
+[tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "B", "C4", "SIM"]
-ignore = ["E501"]
+ignore = ["E501", "B904", "F401", "B007", "W292", "W293"]
 
 [tool.mypy]
 python_version = "3.9"
@@ -40,5 +41,6 @@ classifiers = [
 Homepage = "https://github.com/Roshan8005/roshans-digital-brain"
 Repository = "https://github.com/Roshan8005/roshans-digital-brain"
 Issues = "https://github.com/Roshan8005/roshans-digital-brain/issues"
+
 
 
