@@ -1,0 +1,69 @@
+name: CI Hardening — Generic fixes
+
+# Conservative diagnostic workflow: manual trigger, non-fatal checks, no publishing.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  baseline-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect package manager
+        id: pkg
+        run: |
+          if [ -f package.json ]; then echo "manager=npm" >> $GITHUB_OUTPUT; fi
+          if [ -f requirements.txt ] || [ -f setup.py ] || [ -f pyproject.toml ]; then echo "manager=pip" >> $GITHUB_OUTPUT; fi
+          if [ -f Pipfile ]; then echo "manager=pipenv" >> $GITHUB_OUTPUT; fi
+
+      - name: Setup Node.js (if present)
+        if: steps.pkg.outputs.manager == 'npm'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup Python (if present)
+        if: steps.pkg.outputs.manager == 'pip' || steps.pkg.outputs.manager == 'pipenv'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies (non-fatal)
+        run: |
+          if [ -f package.json ]; then
+            npm ci || echo "::warning::npm ci failed — check package.json / package-lock.json"
+          fi
+          if [ -f requirements.txt ]; then
+            python -m pip install --upgrade pip || true
+            pip install -r requirements.txt || echo "::warning::pip install failed — check requirements.txt"
+          fi
+
+      - name: Run security scans (non-fatal)
+        run: |
+          if [ -f package.json ]; then
+            npm audit --audit-level=high || echo "::warning::npm audit found vulnerabilities or audit failed"
+          fi
+          if command -v pip-audit >/dev/null 2>&1; then
+            pip-audit || echo "::warning::pip-audit failed or found issues"
+          else
+            echo "pip-audit not installed; skipping"
+          fi
+
+      - name: Check common publish secrets (non-fatal)
+        run: |
+          MISSING=0
+          if [ -z "${{ secrets.PYPI_TOKEN || '' }}" ]; then echo "::warning::PYPI_TOKEN missing"; MISSING=1; fi
+          if [ -z "${{ secrets.NPM_TOKEN || '' }}" ]; then echo "::warning::NPM_TOKEN missing"; MISSING=1; fi
+          if [ -z "${{ secrets.GCP_SERVICE_ACCOUNT || '' }}" ]; then echo "::warning::GCP_SERVICE_ACCOUNT missing (if used)"; fi
+          if [ $MISSING -eq 1 ]; then echo "One or more publish secrets are missing — publishing jobs will fail without them."; fi
+
+      - name: Quick secret grep
+        run: |
+          git grep -n "PRIVATE KEY\|BEGIN RSA PRIVATE KEY\|SECRET_KEY\|API_KEY\|PASSWORD" || echo "No obvious secret markers found in worktree"
+
+      - name: Summary
+        run: |
+          echo "Baseline checks complete. Review warnings above for missing secrets, dependency issues, or audit findings."
