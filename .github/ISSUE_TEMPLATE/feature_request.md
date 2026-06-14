@@ -1,20 +1,14 @@
----
+﻿---
 name: Feature request
 about: Suggest an idea for this project
-title: '[FEATURE] '
+title: ''
 labels: enhancement
-assignees: 'Roshan8005'
+assignees: Roshan8005
 
 ---
 
-**Is your feature request related to a problem?**
-Description of the problem.
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is.
 
 **Describe the solution you'd like**
-Clear description of what you want.
-
-**Describe alternatives you've considered**
-Alternative solutions.
-
-**Additional context**
-Any other context.
+A clear and concise description of what you want to happen.
