@@ -2,19 +2,20 @@
 # Location: Root / production_app.py
 
 import os
-import sys
-import json
 import subprocess
-from fastapi import FastAPI, Query, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+import sys
+
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, JSONResponse
 
 # Prevent console crashes due to encoding errors on cloud shells
-if hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 try:
     from dotenv import load_dotenv
+
     load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 except ImportError:
     pass
@@ -27,7 +28,7 @@ sys.path.append(os.path.join(base_dir, "4_Limbic_System"))
 sys.path.append(os.path.join(base_dir, "2_Cerebellum"))
 
 try:
-    from brain_kernel import process_query, load_neuroplasticity_weights
+    from brain_kernel import load_neuroplasticity_weights, process_query
 except ImportError as e:
     print(f"[Production Error] Failed to import brain kernel: {e}")
 
@@ -35,27 +36,28 @@ except ImportError as e:
 app = FastAPI(
     title="Roshan's Digital Brain API",
     description="Veda-Akasha Stack Core API for cognitive and RAG processing.",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 # Enable CORS for public frontend domains (Vercel, Netlify, etc.)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, replace with your specific frontend domain
+    allow_origins=["*"],  # In production, replace with your specific frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Set up Rate Limiting
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
 from fastapi import Request
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 
 # 1. Page Endpoint: Serve Main Chat UI
 @app.get("/", response_class=HTMLResponse)
@@ -69,6 +71,7 @@ async def get_chat_ui():
             raise HTTPException(status_code=500, detail=f"Failed to read Chat UI: {e}")
     raise HTTPException(status_code=404, detail="chat_ui.html not found.")
 
+
 # 1.5 Page Endpoint: Serve Web Dashboard
 @app.get("/dashboard", response_class=HTMLResponse)
 async def get_dashboard():
@@ -78,8 +81,11 @@ async def get_dashboard():
             with open(html_path, "r", encoding="utf-8") as f:
                 return f.read()
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Failed to read dashboard: {e}")
+            raise HTTPException(
+                status_code=500, detail=f"Failed to read dashboard: {e}"
+            )
     raise HTTPException(status_code=404, detail="dashboard.html not found.")
+
 
 # 2. API Endpoint: Get Neuroplasticity Stats
 @app.get("/api/stats")
@@ -90,6 +96,7 @@ async def get_stats():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 # 3. API Endpoint: Get Connected Projects list
 @app.get("/api/projects")
 async def get_projects():
@@ -97,39 +104,56 @@ async def get_projects():
     projects = []
     if os.path.exists(projects_dir):
         try:
-            projects = [p for p in os.listdir(projects_dir) if not p.startswith('.')]
+            projects = [p for p in os.listdir(projects_dir) if not p.startswith(".")]
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
     return JSONResponse(content=projects)
 
+
 # 4. API Endpoint: Query the Brain
 @app.get("/api/query")
 @limiter.limit("20/minute")
-async def query_brain(request: Request, q: str = Query(..., description="Query prompt to process")):
+async def query_brain(
+    request: Request, q: str = Query(..., description="Query prompt to process")
+):
     try:
         result = process_query(q)
         return JSONResponse(content=result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 # 5. API Endpoint: Run Synaptic Simulator
 @app.get("/api/simulate")
 @limiter.limit("10/minute")
-async def run_simulation(request: Request, start: int = Query(1, description="Starting Neuron ID (1-86000)")):
+async def run_simulation(
+    request: Request, start: int = Query(1, description="Starting Neuron ID (1-86000)")
+):
     signal_script = os.path.join(base_dir, "transmit_signal.py")
     if not os.path.exists(signal_script):
-        raise HTTPException(status_code=404, detail="transmit_signal.py script not found.")
-        
+        raise HTTPException(
+            status_code=404, detail="transmit_signal.py script not found."
+        )
+
     try:
         cmd = f'python "{signal_script}" --start {start} --message "Production_Cloud_Pulse" --hops 3'
-        res = subprocess.run(cmd, shell=True, capture_output=True, text=True, encoding='utf-8', errors='replace')
+        res = subprocess.run(
+            cmd,
+            shell=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
         return JSONResponse(content={"output": res.stdout})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 # Running the app locally or in cloud
 if __name__ == "__main__":
     import uvicorn
+
     # Bind to host 0.0.0.0 and dynamic port provided by cloud host environment
     port = int(os.environ.get("PORT", 8080))
     print(f"[Production] Starting Uvicorn server on port {port}...")

@@ -1,16 +1,18 @@
 # Cerebellum Memory Retrieval - Local Search Indexer Engine
 # Location: Cerebellum
 
-import os
 import json
+import os
 import re
 
-import os
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-index_file = os.path.join(base_dir, "4_Limbic_System", "Hippocampus", "knowledge_index.json")
+index_file = os.path.join(
+    base_dir, "4_Limbic_System", "Hippocampus", "knowledge_index.json"
+)
 
 _KNOWLEDGE_CACHE = None
 WORD_PATTERN = re.compile(r"\w+")
+
 
 def _load_index():
     global _KNOWLEDGE_CACHE
@@ -26,9 +28,11 @@ def _load_index():
         print(f"[Cerebellum Error] Failed to read memory index: {e}")
         return {}
 
+
 def clear_cache():
     global _KNOWLEDGE_CACHE
     _KNOWLEDGE_CACHE = None
+
 
 def search_memory(query, limit=3):
     """
@@ -38,19 +42,21 @@ def search_memory(query, limit=3):
     index = _load_index()
     if not index:
         return []
-        
+
     # Standardize query terms
-    query_terms = [term.lower() for term in WORD_PATTERN.findall(query) if len(term) > 2]
+    query_terms = [
+        term.lower() for term in WORD_PATTERN.findall(query) if len(term) > 2
+    ]
     if not query_terms:
         return []
-        
+
     results = []
-    
+
     for rel_path, data in index.items():
         score = 0
         content = data.get("snippet", "").lower()
         filename = data.get("filename", "").lower()
-        
+
         # Calculate matching score based on term occurrence
         for term in query_terms:
             # Filename match is very important (highly weighted)
@@ -58,16 +64,18 @@ def search_memory(query, limit=3):
                 score += 10
             # Content snippet match
             occurrences = content.count(term)
-            score += min(occurrences, 5) # Cap term frequency weight to avoid spam
-            
+            score += min(occurrences, 5)  # Cap term frequency weight to avoid spam
+
         if score > 0:
-            results.append({
-                "file_path": rel_path,
-                "score": score,
-                "region": data.get("region", "General"),
-                "snippet": data.get("snippet", "")
-            })
-            
+            results.append(
+                {
+                    "file_path": rel_path,
+                    "score": score,
+                    "region": data.get("region", "General"),
+                    "snippet": data.get("snippet", ""),
+                }
+            )
+
     # Sort results by score (descending)
     results.sort(key=lambda x: x["score"], reverse=True)
     return results[:limit]
