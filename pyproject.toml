@@ -41,6 +41,4 @@ Homepage = "https://github.com/Roshan8005/roshans-digital-brain"
 Repository = "https://github.com/Roshan8005/roshans-digital-brain"
 Issues = "https://github.com/Roshan8005/roshans-digital-brain/issues"
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-packages = {find = {where = ["src"]}}
+
