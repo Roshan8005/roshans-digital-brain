@@ -1,0 +1,46 @@
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+select = ["E", "F", "W", "I", "N", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roshans_digital_brain"
+version = "1.0.0"
+description = "Project description for roshans-digital-brain"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Roshan Kumar Sah", email = "roshan@example.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+]
+
+[project.urls]
+Homepage = "https://github.com/Roshan8005/roshans-digital-brain"
+Repository = "https://github.com/Roshan8005/roshans-digital-brain"
+Issues = "https://github.com/Roshan8005/roshans-digital-brain/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = {find = {where = ["src"]}}

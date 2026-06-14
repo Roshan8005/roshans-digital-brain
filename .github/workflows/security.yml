@@ -1,0 +1,30 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run security scan
+      run: |
+        if command -v bandit >/dev/null 2>&1; then
+          bandit -r . -f json -o bandit_report.json || true
+        fi
+        if command -v safety >/dev/null 2>&1; then
+          safety check --json || true
+        fi
+    - name: Upload security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          bandit_report.json
+          safety_report.json
