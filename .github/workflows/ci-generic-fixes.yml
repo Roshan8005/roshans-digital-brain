@@ -46,11 +46,8 @@ jobs:
           if [ -f package.json ]; then
             npm audit --audit-level=high || echo "::warning::npm audit found vulnerabilities or audit failed"
           fi
-          if command -v pip-audit >/dev/null 2>&1; then
-            pip-audit || echo "::warning::pip-audit failed or found issues"
-          else
-            echo "pip-audit not installed; skipping"
-          fi
+          python -m pip install pip-audit
+          pip-audit || echo "::warning::pip-audit failed or found issues"
 
       - name: Check common publish secrets (non-fatal)
         run: |
@@ -67,3 +64,4 @@ jobs:
       - name: Summary
         run: |
           echo "Baseline checks complete. Review warnings above for missing secrets, dependency issues, or audit findings."
+
