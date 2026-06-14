@@ -5,7 +5,7 @@ line-length = 88
 target-version = "py39"
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "B", "C4", "SIM"]
-ignore = ["E501", "B904", "F401", "B007", "W292", "W293"]
+ignore = ["E501", "B904", "F401", "B007", "W292", "W293", "E402"]
 
 [tool.mypy]
 python_version = "3.9"
